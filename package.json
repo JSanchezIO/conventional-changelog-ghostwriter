@@ -1,0 +1,64 @@
+{
+  "name": "conventional-changelog-ghostwriter",
+  "version": "0.1.0",
+  "description": "A configurable conventional-changelog preset",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JSanchezIO/conventional-changelog-ghostwriter.git"
+  },
+  "author": "Juan Sanchez <11725911+JSanchezIO@users.noreply.github.com>",
+  "homepage": "https://github.com/JSanchezIO/conventional-changelog-ghostwriter",
+  "main": "dist/index.js",
+  "scripts": {
+    "ci:build": "tsc && copyfiles -u 1 \"src/templates/*.*\" \"dist\"",
+    "ci:lint": "eslint . --ext .js,.ts",
+    "ci:types": "tsc --noEmit",
+    "ci:validate": "npm-run-all ci:lint ci:types",
+    "ci:version": "semantic-release",
+    "prepare": "is-ci || husky install"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "keywords": [
+    "changelog",
+    "conventional",
+    "conventional-changelog",
+    "ghostwriter",
+    "preset"
+  ],
+  "dependencies": {
+    "compare-func": "^2.0.0",
+    "find-up": "^5.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.2.1",
+    "@types/compare-func": "^1.3.0",
+    "@types/node": "^15.12.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "commitizen": "^4.2.3",
+    "copyfiles": "^2.4.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^6.0.0",
+    "is-ci": "^3.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1",
+    "prettier-plugin-organize-imports": "^2.1.0",
+    "prettier-plugin-package": "^1.3.0",
+    "pretty-quick": "^3.1.0",
+    "semantic-release": "^17.4.2",
+    "typescript": "^4.2.4"
+  }
+}

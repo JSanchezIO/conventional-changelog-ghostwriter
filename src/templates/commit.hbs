@@ -1,0 +1,12 @@
+-
+{{~#if scope}}
+ **{{scope}}:**
+{{~/if}}
+ {{subject}}
+ [{{hash.short}}]({{commitUrl}})
+{{#if references~}}
+ {{~@root.config.issueReferencesPrefix}}
+{{~#each references}}
+ [{{this.prefix}}{{this.issue}}]({{this.issueUrl}}){{#unless @last~}}, {{/unless}}
+{{/each}}
+{{/if}}
