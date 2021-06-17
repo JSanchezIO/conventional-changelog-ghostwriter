@@ -18,6 +18,14 @@ configuration via a `.changelogrc.js` file.
 
 <br />
 
+**This package is best used alongside the other `ghostwriter` tools. Each tool can be configured
+using the same `.changelogrc.js` file:**
+
+- [commitlint-config-ghostwriter](https://github.com/JSanchezIO/commitlint-config-ghostwriter)
+- [cz-ghostwriter](https://github.com/JSanchezIO/cz-ghostwriter)
+
+<br />
+
 ## Installation
 
 ```sh
