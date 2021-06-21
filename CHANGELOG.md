@@ -1,3 +1,15 @@
+# [1.0.1](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/compare/v1.0.0...v1.0.1) (2021-06-21)
+
+
+### Fixes
+
+- add fallback when determining short and long commit hashes
+ [2dff52c](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/commit/2dff52cc25cb46fc496b3659ab70bd79312b6725)
+
+
+
+<br />
+
 # 1.0.0 (2021-06-17)
 
 
