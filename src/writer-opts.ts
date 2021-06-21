@@ -80,11 +80,19 @@ export default {
       uniqueReferences.add(referenceKey);
     });
 
+    const hash =
+      commit.commit !== undefined
+        ? commit.commit
+        : {
+            long: commit.hash,
+            short: commit.hash.substr(0, 7),
+          };
+
     const result: Ghostwriter.Models.Commit = {
       commitUrl: config.commitUrlFormat
-        .replace('{{LONG_HASH}}', commit.commit.long)
-        .replace('{{SHORT_HASH}}', commit.commit.short),
-      hash: commit.commit,
+        .replace('{{LONG_HASH}}', hash.long)
+        .replace('{{SHORT_HASH}}', hash.short),
+      hash,
       notes: commit.notes.map((note) => {
         return {
           text: note.text.replace(new RegExp(config.issuePrefixes[1], 'g'), '').trim(),

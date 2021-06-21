@@ -12,7 +12,7 @@ declare namespace ConventionalChangelog {
         email: string;
         date: Date;
       };
-      commit: {
+      commit?: {
         long: string;
         short: string;
       };
