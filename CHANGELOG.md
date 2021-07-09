@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/compare/v1.0.1...v1.1.0) (2021-07-09)
+
+
+### Features
+
+- add ability to omit the br tag rendering between versions
+ [5c156a0](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/commit/5c156a0dfa01765e0677640870127fca0bf101c3)
+for [#1](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/issues/1)
+
+
+
+<br />
+
 # [1.0.1](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/compare/v1.0.0...v1.0.1) (2021-06-21)
 
 
