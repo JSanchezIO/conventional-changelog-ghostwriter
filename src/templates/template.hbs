@@ -14,7 +14,7 @@
 
 {{/each}}
 
-{{#if @root.previousTag}}
+{{#if @root.previousTag}}{{#unless @root.config.omitVersionSpacing}}
 
 <br />
-{{/if~}}
+{{/unless}}{{/if~}}

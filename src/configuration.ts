@@ -4,7 +4,10 @@
 import { sync as findUpSync } from 'find-up';
 import { readFileSync } from 'fs';
 
-type OptionalConfigProps = Pick<Partial<Ghostwriter.Models.Configuration>, 'issueReferencesPrefix'>;
+type OptionalConfigProps = Pick<
+  Partial<Ghostwriter.Models.Configuration>,
+  'issueReferencesPrefix' | 'omitVersionSpacing'
+>;
 
 type RequiredConfigProps = Pick<Ghostwriter.Models.Configuration, 'types'>;
 
@@ -44,6 +47,10 @@ export const getConfiguration = (
     config.issueReferencesPrefix = 'for';
   }
 
+  if (config.omitVersionSpacing === undefined || config.omitVersionSpacing === null) {
+    config.omitVersionSpacing = false;
+  }
+
   if (config.preset === 'github') {
     cachedConfig = {
       commitUrlFormat: `${context.host}/${context.owner}/${context.repository}/commit/{{LONG_HASH}}`,
@@ -51,6 +58,7 @@ export const getConfiguration = (
       issuePrefixes: ['#'],
       issueReferencesPrefix: config.issueReferencesPrefix,
       issueUrlFormat: `${context.host}/${context.owner}/${context.repository}/issues/{{ISSUE_NUMBER}}`,
+      omitVersionSpacing: config.omitVersionSpacing,
       types: config.types,
     };
 

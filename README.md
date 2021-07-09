@@ -39,6 +39,12 @@ npm i conventional-changelog-ghostwriter
 1. Create and configure a `.changelogrc.js` file in the root of your repository
 2. Update your `CHANGELOG.md` generator to leverage `conventional-changelog-ghostwriter`
 
+   - Conventional Changelog CLI
+
+     ```sh
+     conventional-changelog-cli -p ghostwriter
+     ```
+
    - Semantic Release
 
      ```js
@@ -125,6 +131,14 @@ The URL template to use when generating links to a comparison between two git sh
 
 <br >
 
+### `omitVersionSpacing` : _boolean | undefined_
+
+---
+
+When `true`, omits the `<br />` tag rendered between version numbers.
+
+<br >
+
 ### `preset` : _"github" | undefined_
 
 ---
@@ -154,3 +168,17 @@ type HiddenType = CommitType & { hidden: true; section: undefined };
 
 type VisibleType = CommitType & { hidden: undefined; section: string };
 ```
+
+## Noteworthy
+
+### Asterisk Scope
+
+If the scope of a commit is `*` it will be omitted from the changelog.
+
+> Inputted Commit:
+>
+> `feat(*): add awesome things`
+>
+> Outputted Changelog:
+>
+> `feat: add awesome things`

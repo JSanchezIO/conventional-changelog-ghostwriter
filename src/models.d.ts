@@ -16,6 +16,9 @@ declare namespace Ghostwriter {
       /** The configuration preset to use which will set other configuration properties. */
       issueUrlFormat: string;
 
+      /** When `true`, omits the `<br />` tag rendered between version numbers. */
+      omitVersionSpacing: boolean;
+
       /**
        * The array of type objects representing the explicitly supported commit message
        * types, and whether they should show up in generated CHANGELOGs.
