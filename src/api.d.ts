@@ -78,20 +78,43 @@ declare namespace ConventionalChangelog {
     };
 
     type Context = {
-      /** The current releases' tag. */
-      currentTag: string;
-
       /** The host of the repository. */
       host: string;
 
       /** The owner of the repository. */
       owner: string;
 
-      /** The previsous release's tag, if any. */
-      previousTag?: string;
-
       /** The name of the repository. */
       repository: string;
-    };
+    } & (
+      | {
+          /** The current releases' tag. */
+          currentTag: string;
+
+          /** The previsous release's tag, if any. */
+          previousTag?: string;
+
+          gitSemverTags?: undefined;
+
+          packageData?: undefined;
+        }
+      | {
+          currentTag?: undefined;
+
+          previousTag?: undefined;
+
+          /** An array of existing tags sorted by most recent. */
+          gitSemverTags?: string[];
+
+          /** The corresponding package.json */
+          packageData: {
+            /** The name of the package. */
+            name: string;
+
+            /** The new version of the package. */
+            version: string;
+          };
+        }
+    );
   }
 }

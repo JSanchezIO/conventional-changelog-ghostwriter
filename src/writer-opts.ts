@@ -6,10 +6,11 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { getConfiguration } from './configuration';
 
-let nonNativeIssuePrefixes: Array<{
+let issuePrefixes: Array<{
   issuePrefix: string;
   regExp: RegExp;
 }> = [];
+
 export default {
   commitGroupsSort: 'title',
   commitPartial: readFileSync(resolve(__dirname, './templates/commit.hbs'), 'utf-8'),
@@ -27,58 +28,60 @@ export default {
     if (!context.config) {
       context.config = getConfiguration(context);
 
-      if (context.previousTag) {
+      if (context.currentTag && context.previousTag) {
         context.config.compareUrlFormat = context.config.compareUrlFormat
           .replace('{{PREVIOUS_TAG}}', context.previousTag)
           .replace('{{CURRENT_TAG}}', context.currentTag);
       }
 
-      nonNativeIssuePrefixes = context.config.issuePrefixes
-        .filter((issuePrefix) => issuePrefix !== '#')
-        .map((issuePrefix) => {
-          return {
-            issuePrefix,
-            regExp: new RegExp(`${issuePrefix}(\\S+)`),
-          };
-        });
+      if (context.gitSemverTags?.length) {
+        const currentTag = `${context.packageData.name}@${context.packageData.version}`;
+        const [previousTag] = context.gitSemverTags;
+
+        if (previousTag) {
+          context.config.compareUrlFormat = context.config.compareUrlFormat
+            .replace('{{PREVIOUS_TAG}}', previousTag)
+            .replace('{{CURRENT_TAG}}', currentTag);
+        }
+      }
+
+      issuePrefixes = context.config.issuePrefixes.map((issuePrefix) => {
+        return {
+          issuePrefix,
+          regExp: new RegExp(`#${issuePrefix}(\\S+)`, 'g'),
+        };
+      });
     }
 
     const { config } = context;
     const uniqueReferences = new Set<string>();
     const references: Ghostwriter.Models.Commit['references'] = [];
 
-    commit.references?.forEach((reference) => {
-      const referenceKey = `${reference.prefix}${reference.issue}`;
+    if (commit.footer?.length) {
+      const { footer } = commit;
 
-      if (uniqueReferences.has(referenceKey)) {
-        return;
-      }
+      issuePrefixes.forEach(({ issuePrefix, regExp }) => {
+        const issues = Array.from(footer.matchAll(regExp), (matches) => matches[1]);
 
-      let { issue, prefix } = reference;
+        issues.forEach((issue) => {
+          const referenceKey = `${issuePrefix}${issue}`;
 
-      const matchingNonNativeIssuePrefix = nonNativeIssuePrefixes.find(({ regExp }) =>
-        regExp.test(issue)
-      );
+          if (uniqueReferences.has(referenceKey)) {
+            return;
+          }
 
-      if (matchingNonNativeIssuePrefix) {
-        const matchingIssue = matchingNonNativeIssuePrefix.regExp.exec(issue);
+          references.push({
+            issue,
+            issueUrl: config.issueUrlFormat
+              .replace('{{ISSUE_PREFIX}}', issuePrefix)
+              .replace('{{ISSUE_NUMBER}}', issue),
+            prefix: issuePrefix,
+          });
 
-        if (matchingIssue?.length) {
-          [, issue] = matchingIssue;
-          prefix = matchingNonNativeIssuePrefix.issuePrefix;
-        }
-      }
-
-      references.push({
-        issue,
-        issueUrl: config.issueUrlFormat
-          .replace('{{ISSUE_PREFIX}}', prefix)
-          .replace('{{ISSUE_NUMBER}}', issue),
-        prefix,
+          uniqueReferences.add(referenceKey);
+        });
       });
-
-      uniqueReferences.add(referenceKey);
-    });
+    }
 
     const hash =
       commit.commit !== undefined
