@@ -45,6 +45,23 @@ npm i conventional-changelog-ghostwriter
      conventional-changelog-cli -p ghostwriter
      ```
 
+   - Lerna
+
+     ```json
+     {
+       ...
+
+       "command": {
+         "version": {
+           "changelogPreset": "ghostwriter",
+           "conventionalCommits": true
+         }
+       }
+
+       ...
+     }
+     ```
+
    - Semantic Release
 
      ```js

@@ -2,6 +2,11 @@ module.exports = {
   preset: 'github',
   types: [
     {
+      description: 'Documentation',
+      hidden: true,
+      type: 'docs',
+    },
+    {
       description: 'A new feature',
       section: 'Features',
       type: 'feat',
