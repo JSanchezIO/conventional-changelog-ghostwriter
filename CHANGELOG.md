@@ -1,3 +1,15 @@
+# [1.1.2](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/compare/v1.1.1...v1.1.2) (2021-07-14)
+
+
+### Fixes
+
+- compare urls for version bumped only packages
+ [63ada50](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/commit/63ada50cc22cee86783c08f76a3dcd1177088df1)
+
+
+
+<br />
+
 # [1.1.1](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/compare/v1.1.0...v1.1.1) (2021-07-14)
 
 
