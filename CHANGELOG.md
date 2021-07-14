@@ -1,3 +1,17 @@
+# [1.1.1](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/compare/v1.1.0...v1.1.1) (2021-07-14)
+
+
+### Fixes
+
+- issue number recognition and monorepo version compare urls
+ [ceb256a](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/commit/ceb256adcf2c81f2a0c8993cc5d0fd5210060a89)
+for [#1](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/issues/1), 
+ [#2](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/issues/2)
+
+
+
+<br />
+
 # [1.1.0](https://github.com/JSanchezIO/conventional-changelog-ghostwriter/compare/v1.0.1...v1.1.0) (2021-07-09)
 
 
