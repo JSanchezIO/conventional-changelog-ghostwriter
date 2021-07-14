@@ -101,7 +101,7 @@ declare namespace ConventionalChangelog {
       | {
           currentTag?: undefined;
 
-          previousTag?: undefined;
+          previousTag?: string;
 
           /** An array of existing tags sorted by most recent. */
           gitSemverTags?: string[];

@@ -16,6 +16,30 @@ export default {
   commitPartial: readFileSync(resolve(__dirname, './templates/commit.hbs'), 'utf-8'),
   commitsSort: ['scope', 'subject'],
   footerPartial: readFileSync(resolve(__dirname, './templates/footer.hbs'), 'utf-8'),
+  finalizeContext: (context: Ghostwriter.Models.Context): Ghostwriter.Models.Context => {
+    if (!context.config) {
+      context.config = getConfiguration(context);
+    }
+
+    if (context.currentTag && context.previousTag) {
+      context.config.compareUrlFormat = context.config.compareUrlFormat
+        .replace('{{PREVIOUS_TAG}}', context.previousTag)
+        .replace('{{CURRENT_TAG}}', context.currentTag);
+    }
+
+    if (context.gitSemverTags?.length) {
+      const currentTag = `${context.packageData.name}@${context.packageData.version}`;
+      const [previousTag] = context.gitSemverTags;
+
+      context.config.compareUrlFormat = context.config.compareUrlFormat
+        .replace('{{PREVIOUS_TAG}}', previousTag)
+        .replace('{{CURRENT_TAG}}', currentTag);
+
+      context.previousTag = previousTag;
+    }
+
+    return context;
+  },
   groupBy: 'type',
   headerPartial: readFileSync(resolve(__dirname, './templates/header.hbs'), 'utf-8'),
   mainTemplate: readFileSync(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
@@ -27,23 +51,6 @@ export default {
   ): Ghostwriter.Models.Commit | undefined => {
     if (!context.config) {
       context.config = getConfiguration(context);
-
-      if (context.currentTag && context.previousTag) {
-        context.config.compareUrlFormat = context.config.compareUrlFormat
-          .replace('{{PREVIOUS_TAG}}', context.previousTag)
-          .replace('{{CURRENT_TAG}}', context.currentTag);
-      }
-
-      if (context.gitSemverTags?.length) {
-        const currentTag = `${context.packageData.name}@${context.packageData.version}`;
-        const [previousTag] = context.gitSemverTags;
-
-        if (previousTag) {
-          context.config.compareUrlFormat = context.config.compareUrlFormat
-            .replace('{{PREVIOUS_TAG}}', previousTag)
-            .replace('{{CURRENT_TAG}}', currentTag);
-        }
-      }
 
       issuePrefixes = context.config.issuePrefixes.map((issuePrefix) => {
         return {
